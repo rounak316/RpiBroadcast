@@ -11,5 +11,8 @@
   "dependencies": {
     "firebase-admin": "^5.12.1",
     "public-ip": "^2.4.0"
+  },
+  "devDependencies": {
+    "pm2": "^2.10.4"
   }
 }
