@@ -16,17 +16,17 @@ let timeDelta = 1000
     databaseURL: "https://api-project-930527097734.firebaseio.com"
   });
 
+function insertData(data){
+
+  return admin.firestore().doc("Home/Rpi" ).set(data)
+}
+
+
 
 
 function ingestDatatoFirebase(){
   
 try{
-
-
-
-let db = admin.database();
-let ref = db.ref("/some_resource");
-let rpi = db.ref('rpi')
 
 
 interface.getData().then(data=>{
@@ -47,13 +47,14 @@ interface.getData().then(data=>{
 
  })
  .then( data =>{
-  rpi.set(data, (a)=> {
-console.log('callback ? ', a)
-return setTimeout(ingestDatatoFirebase , timeOut)
-  } )
-  
+return insertData(data)  
  })
+ .then( () =>{
+   console.log('success' )
+  return setTimeout(ingestDatatoFirebase , timeOut)
+   })
  .catch((err)=>{
+  console.log('catch' , err)
   return setTimeout(ingestDatatoFirebase , timeOut)
  })
 } )
