@@ -7,20 +7,24 @@ const publicIp = require('public-ip');
 
 let timeOut = 1000
 let timeDelta = 1000
+
+console.log('app initializeing')
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://api-project-930527097734.firebaseio.com"
 });
+console.log('app initialized')
 
-let db = admin.database();
-let ref = db.ref("/some_resource");
 
 
 function ingestDatatoFirebase(){
-
+try{
+ 
+let db = admin.database();
+let ref = db.ref("/some_resource");
 let rpi = db.ref('rpi')
 
-publicIp.v4().then(  )
 
 interface.getData().then(data=>{
   let time = Date.now()
@@ -37,6 +41,11 @@ interface.getData().then(data=>{
   setTimeout(ingestDatatoFirebase , timeOut)
 
 
+ }).catch(err=>{
+
+   data['publicIp'] = '0.0.0.0'
+  rpi.set(data)
+  setTimeout(ingestDatatoFirebase , timeOut)
  })
 } )
 .catch(err=>{
@@ -44,6 +53,12 @@ interface.getData().then(data=>{
   setTimeout(ingestDatatoFirebase , timeOut)
 })
 
+ 
+}
+catch(err){
+  console.log('Something went Wrong..Trying again')
+  setTimeout(ingestDatatoFirebase , 1000)
+}
 }
 
 
