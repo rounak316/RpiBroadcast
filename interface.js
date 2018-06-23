@@ -1,6 +1,6 @@
 
 var os = require('os');
-var ifaces = os.networkInterfaces();
+
 
 
 
@@ -15,6 +15,7 @@ let interfaces = {}
 function gatherData(callback){
 
 interfaces = {}
+let ifaces = os.networkInterfaces();
 Object.keys(ifaces).forEach(function (ifname, index, array) {
     if(index == array.length -1){
 
