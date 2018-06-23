@@ -18,7 +18,7 @@ if(admin.apps.length == 0){
 
 
 function ingestDatatoFirebase(){
-  console.log('admin.apps.length')
+  
 try{
 
 
@@ -61,7 +61,7 @@ interface.getData().then(data=>{
  
 }
 catch(err){
-  console.log('Something went Wrong..Trying again', err)
+  // console.log('Something went Wrong..Trying again', err)
   setTimeout(ingestDatatoFirebase , 1000)
 }
 }
