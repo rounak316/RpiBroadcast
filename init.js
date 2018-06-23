@@ -33,26 +33,27 @@ interface.getData().then(data=>{
   data['timestamp'] = time
   data['timelapse'] = timeOut + timeDelta
   return data
-  
 })
 .then( (data)=>{
- return publicIp.v4().then(ip=>{
-  data['publicIp'] = ip
-  rpi.set(data)
-
-  setTimeout(ingestDatatoFirebase , timeOut)
-
+  publicIp.v4().then(ip=>{
+    return data['publicIp'] = ip 
 
  }).catch(err=>{
 
-   data['publicIp'] = '0.0.0.0'
+  return  data['publicIp'] = '0.0.0.0'
+
+ })
+ .then( data =>{
   rpi.set(data)
-  setTimeout(ingestDatatoFirebase , timeOut)
+  return setTimeout(ingestDatatoFirebase , timeOut)
+ })
+ .catch((err)=>{
+  return setTimeout(ingestDatatoFirebase , timeOut)
  })
 } )
 .catch(err=>{
 
-  setTimeout(ingestDatatoFirebase , timeOut)
+  return  setTimeout(ingestDatatoFirebase , timeOut)
 })
 
  
