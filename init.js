@@ -9,10 +9,6 @@ const publicIp = require('public-ip');
 let timeOut = 1000
 let timeDelta = 1000
 
-console.log('I am started', Date.now())
-setInterval( ()=>{
-console.log('I am running', Date.now())
-} , timeOut)
 
 
   admin.initializeApp({
@@ -51,8 +47,11 @@ interface.getData().then(data=>{
 
  })
  .then( data =>{
-  rpi.set(data)
-  return setTimeout(ingestDatatoFirebase , timeOut)
+  rpi.set(data, (a)=> {
+console.log('callback ? ', a)
+return setTimeout(ingestDatatoFirebase , timeOut)
+  } )
+  
  })
  .catch((err)=>{
   return setTimeout(ingestDatatoFirebase , timeOut)
