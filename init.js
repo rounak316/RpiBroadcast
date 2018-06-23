@@ -8,19 +8,21 @@ const publicIp = require('public-ip');
 let timeOut = 1000
 let timeDelta = 1000
 
-console.log('app initializeing')
+if(admin.apps.length == 0){
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://api-project-930527097734.firebaseio.com"
-});
-console.log('app initialized')
-
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://api-project-930527097734.firebaseio.com"
+  });
+}
 
 
 function ingestDatatoFirebase(){
+  console.log('admin.apps.length')
 try{
- 
+
+
+
 let db = admin.database();
 let ref = db.ref("/some_resource");
 let rpi = db.ref('rpi')
@@ -56,7 +58,7 @@ interface.getData().then(data=>{
  
 }
 catch(err){
-  console.log('Something went Wrong..Trying again')
+  console.log('Something went Wrong..Trying again', err)
   setTimeout(ingestDatatoFirebase , 1000)
 }
 }
