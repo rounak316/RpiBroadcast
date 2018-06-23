@@ -3,6 +3,8 @@ let admin = require('firebase-admin');
 let serviceAccount = require('./key.json');
 let interface = require('./interface')
 
+const publicIp = require('public-ip');
+
 let timeOut = 1000
 let timeDelta = 1000
 admin.initializeApp({
@@ -17,14 +19,27 @@ let ref = db.ref("/some_resource");
 function ingestDatatoFirebase(){
 
 let rpi = db.ref('rpi')
+
+publicIp.v4().then(  )
+
 interface.getData().then(data=>{
   let time = Date.now()
   data['timestamp'] = time
   data['timelapse'] = timeOut + timeDelta
+  return data
+  
+})
+.then( (data)=>{
+ return publicIp.v4().then(ip=>{
+  data['publicIp'] = ip
   rpi.set(data)
+
   setTimeout(ingestDatatoFirebase , timeOut)
 
-}).catch(err=>{
+
+ })
+} )
+.catch(err=>{
 
   setTimeout(ingestDatatoFirebase , timeOut)
 })

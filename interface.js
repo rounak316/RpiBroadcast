@@ -7,7 +7,6 @@ var ifaces = os.networkInterfaces();
 function getData(){
     
     return new Promise( (res,rej)=>{
-        
         gatherData(res)
     } )
     
