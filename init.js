@@ -36,11 +36,13 @@ interface.getData().then(data=>{
 })
 .then( (data)=>{
   publicIp.v4().then(ip=>{
-    return data['publicIp'] = ip 
+     data['publicIp'] = ip 
+     return data
 
  }).catch(err=>{
 
-  return  data['publicIp'] = '0.0.0.0'
+    data['publicIp'] = '0.0.0.0'
+    return data
 
  })
  .then( data =>{
