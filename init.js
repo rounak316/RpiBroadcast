@@ -5,16 +5,21 @@ let interface = require('./interface')
 
 const publicIp = require('public-ip');
 
+
 let timeOut = 1000
 let timeDelta = 1000
 
-if(admin.apps.length == 0){
+console.log('I am started', Date.now())
+setInterval( ()=>{
+console.log('I am running', Date.now())
+} , timeOut)
+
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://api-project-930527097734.firebaseio.com"
   });
-}
+
 
 
 function ingestDatatoFirebase(){
@@ -62,7 +67,7 @@ interface.getData().then(data=>{
 }
 catch(err){
   // console.log('Something went Wrong..Trying again', err)
-  setTimeout(ingestDatatoFirebase , 1000)
+  setTimeout(ingestDatatoFirebase , timeOut)
 }
 }
 
