@@ -16,8 +16,22 @@ let timeDelta = 1000
     databaseURL: "https://api-project-930527097734.firebaseio.com"
   });
 
-function insertData(data){
+  let GlobalData = {}
 
+  function jsonEqual(a,b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
+function insertData(data){
+if ( jsonEqual(data , GlobalData) ){
+  console.log("Equal", data , GlobalData)
+  return  Promise.resolve()
+}
+console.log('Unique', data , GlobalData)
+
+GlobalData = JSON.parse(JSON.stringify(data))
+let time = Date.now()
+data['timestamp'] = time
   return admin.firestore().doc("Home/Rpi" ).set(data)
 }
 
@@ -30,8 +44,8 @@ try{
 
 
 interface.getData().then(data=>{
-  let time = Date.now()
-  data['timestamp'] = time
+  
+  // data['timestamp'] = time
   data['timelapse'] = timeOut + timeDelta
   return data
 })
